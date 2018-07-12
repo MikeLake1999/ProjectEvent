@@ -45,5 +45,14 @@ namespace DAL.Test
             List<User> listUser = userDAL.GetAllUser();
             Assert.NotNull(listUser);
         }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        public void GetUserNameTest(int id)
+        {
+            User result = userDAL.GetByName(id);
+            Assert.NotNull(result);
+        }
     }
 }

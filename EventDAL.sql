@@ -7,7 +7,8 @@ use EventDB;
 
 
 create table if not exists UserDB(
-    user_name varchar(50) primary key not null,
+	user_id int auto_increment primary key,
+    user_name varchar(50) not null,
     user_password varchar(50) not null,
     name_user varchar(100) not null,
     age int not null,
@@ -29,11 +30,11 @@ create table if not exists EventDB(
 
 
 create table if not exists EventDetailsDB(
-	username varchar(50) not null,
+	user_name varchar(50) not null,
     event_id int not null,
     event_status varchar(50) not null,
-    constraint pk_EventDetails primary key(username, event_id),
-    constraint fk_EventDetails_Users foreign key(username) references UserDB(user_name),
+    constraint pk_EventDetails primary key(user_name, event_id),
+    constraint fk_EventDetails_Users foreign key(user_name) references UserDB(user_name),
     constraint fk_EventDetails_Events foreign key(event_id) references EventDB(event_id)
     
 );

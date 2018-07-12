@@ -47,40 +47,75 @@ namespace DAL
             return user;
         }
 
-          public List<User> GetAllUser()
+        public List<User> GetAllUser()
         {
             List<User> user = new List<User>();
-            string  query = "Select user_name, user_password, type_account, name_user, age, job, address, email, phone_number from UserDB;";
-            if(connection.State == System.Data.ConnectionState.Closed){
+            string query = @"Select user_name, user_password, type_account, name_user, age, job, address, email, phone_number from UserDB;";
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
                 connection.Open();
             }
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                using(reader = cmd.ExecuteReader())
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            using (reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
                 {
-                
-                    while(reader.Read())
-                    {
-                        user.Add(GetUser(reader));
-                    }
-                    reader.Close();
+                    user.Add(GetUser(reader));
                 }
+                reader.Close();
+            }
             connection.Close();
             return user;
         }
+
+        public User GetByName(int userID)
+        {
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
+                connection.Open();
+            }
+            query = @"select user_id, user_name, user_password, type_account, name_user, age, job, address, email, phone_number
+                        from UserDB where user_id=" + userID + ";";
+            reader = (new MySqlCommand(query, connection)).ExecuteReader();
+            User c = null;
+            if (reader.Read())
+            {
+                c = GetUser(reader);
+            }
+            reader.Close();
+            connection.Close();
+            return c;
+        }
+
+        internal User GetByName(string userID, MySqlConnection connection)
+        {
+            query = @"select user_id, user_name, user_password, type_account, name_user, age, job, address, email, phone_number
+                        from UserDB where user_id=" + userID + ";";
+            User c = null;
+            reader = (new MySqlCommand(query, connection)).ExecuteReader();
+            if (reader.Read())
+            {
+                c = GetUser(reader);
+            }
+            reader.Close();
+            connection.Close();
+            return c;
+        }
         private User GetUser(MySqlDataReader reader)
         {
-           User user = new User();
-           user.Name = reader.GetString("name_user");
-           user.Age = reader.GetInt32("age");
-           user.Address = reader.GetString("address");
-           user.Job = reader.GetString("job");
-           user.Email = reader.GetString("Email");
-           user.Phone = reader.GetString("phone_number");
-           user.AccountType = reader.GetString("type_account");
-           user.User_Name = reader.GetString("user_name");
-           user.Password = reader.GetString("user_password");
+            User user = new User();
+            user.Name = reader.GetString("name_user");
+            user.Age = reader.GetInt32("age");
+            user.Address = reader.GetString("address");
+            user.Job = reader.GetString("job");
+            user.Email = reader.GetString("Email");
+            user.Phone = reader.GetString("phone_number");
+            user.AccountType = reader.GetString("type_account");
+            user.User_Name = reader.GetString("user_name");
+            user.Password = reader.GetString("user_password");
 
-           return user;
-        }  
+            return user;
+        }
     }
 }
