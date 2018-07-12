@@ -1,0 +1,1 @@
+server=localhost;user id=EventUser;password=123456789;port=3306;database=EventDB;SslMode=None
