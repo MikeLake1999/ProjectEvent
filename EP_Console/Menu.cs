@@ -197,12 +197,16 @@ namespace EP_Console
                     case 3:
                         Console.Clear();
                         var lists = ubl.GetAllUser();
-                        string line = ("================\n\n");
-                        Console.Write(" Name          |    Age     |  Job     | Phone Number |");
+                        string line = ("\n|=======================================================================|\n");
+                        Console.WriteLine("\tDanh Sách Người Dùng\t");
+                        //Console.Write("|  Name\t\t|\tAge\t|\tJob\t|\tPhone Number\t|");
+                        Console.WriteLine("|  {0,-10}\t|\t{1,-10}\t|\t{2,-15}\t|\t{3,-20}\t|","Name","Age","Job","Phone Number");
                         Console.WriteLine(line);
                         foreach (var User in lists)
                         {
-                            Console.WriteLine("{0,-20}{1,-10}{2,-12}{3,-15}", User.Name, User.Age, User.Job, User.Phone);
+                            //Console.WriteLine("|  {0,%5s}\t|{1,-10}|{2,-12}|{3,-15}|", User.Name, User.Age, User.Job, User.Phone);
+                            Console.WriteLine("|  {0,-10}\t|\t{1,-10}\t|\t{2,-15}\t|\t{3,-20}\t|", User.Name, User.Age, User.Job, User.Phone);
+
                         }
                         Console.Write("Press Anything To ComeBack................... ");
                         Console.ReadLine();
@@ -211,7 +215,7 @@ namespace EP_Console
                     case 4:
                         Console.Clear();
                         var list = ebl.GetAllEvent();
-                        string lin = ("================\n\n");
+                        string lin = ("\n================================================================================================================================\n");
                         Console.Write(" Event ID  |          Name Event         |        Address         |             Description           |        Time       | ");
                         Console.WriteLine(lin);
                         foreach (var Event in list)

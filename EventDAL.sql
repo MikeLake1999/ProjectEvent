@@ -10,7 +10,7 @@ create table if not exists UserDB(
 	user_id int auto_increment primary key,
     user_name varchar(50) not null,
     user_password varchar(50) not null,
-    name_user varchar(100) not null,
+    name_user varchar(50) not null,
     age int not null,
     type_account int,
     job varchar(50),
@@ -23,7 +23,7 @@ create table if not exists EventDB(
 	event_id int auto_increment primary key,
     event_name varchar(100) not null,
     address varchar(100),
-    description varchar(1000),
+    description varchar(500),
     event_time varchar(50)
 );
 
@@ -39,7 +39,7 @@ create table if not exists EventDetailsDB(
     
 );
 delimiter $$
-create procedure sp_createEvent(IN event_Name varchar(100), IN Address varchar(100),IN Description varchar(100), In Event_Time varchar(50), OUT eventId int)
+create procedure sp_createEvent(IN event_Name varchar(100), IN Address varchar(100),IN Description varchar(500), In Event_Time varchar(50), OUT eventId int)
 begin
 	insert into EventDB(event_name, address, description, event_time) values (event_Name, Address, Description, Event_Time); 
     select max(event_id) into eventId from EventDB;
