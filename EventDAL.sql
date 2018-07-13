@@ -30,11 +30,11 @@ create table if not exists EventDB(
 
 
 create table if not exists EventDetailsDB(
-	user_name varchar(50) not null,
+	user_id int not null,
     event_id int not null,
     event_status varchar(50) not null,
-    constraint pk_EventDetails primary key(user_name, event_id),
-    constraint fk_EventDetails_Users foreign key(user_name) references UserDB(user_name),
+    constraint pk_EventDetails primary key(user_id, event_id),
+    constraint fk_EventDetails_Users foreign key(user_id) references UserDB(user_id),
     constraint fk_EventDetails_Events foreign key(event_id) references EventDB(event_id)
     
 );
