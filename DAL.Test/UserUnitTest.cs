@@ -33,7 +33,7 @@ namespace DAL.Test
         }
 
 
-            [Fact]
+        [Fact]
         public void LoginTest4()
         {
             Assert.Null(userDAL.Login("'?^%'", "'.:=='"));
@@ -49,9 +49,9 @@ namespace DAL.Test
         [Theory]
         [InlineData(1)]
         [InlineData(2)]
-        public void GetUserNameTest(int id)
+        public void GetUserNameTest(int? id)
         {
-            User result = userDAL.GetByName(id);
+            User result = userDAL.GetByID(id);
             Assert.NotNull(result);
         }
     }

@@ -11,16 +11,16 @@ namespace DAL.Test
     {
         private EventDAL eventDal = new EventDAL();
         
-        // [Theory]
-        // [InlineData("VTCA 1", "Ha Noi", "Nothing", "1h")]
-        // [InlineData("VTCA 2", "Hai Phong","Nothing", "1h")]
-        // public void AddEventTest(string name, string address, string description, string time)
-        // {
-        //     Event c = new Event{Name_Event=name, Address_Event=address, Description=description, Time=time};
-        //     int? result = eventDal.AddEvent(c);
-        //     Assert.NotNull(result);
-        //     Assert.True((result??0) > 0);
-        // }
+        [Theory]
+        [InlineData("VTCA 1", "Ha Noi", "Nothing", "1h")]
+        [InlineData("VTCA 2", "Hai Phong","Nothing", "1h")]
+        public void AddEventTest(string name, string address, string description, string time)
+        {
+            Event c = new Event{Name_Event=name, Address_Event=address, Description=description, Time=time};
+            int? result = eventDal.AddEvent(c);
+            Assert.NotNull(result);
+            Assert.True((result??0) > 0);
+        }
 
 
         [Fact]

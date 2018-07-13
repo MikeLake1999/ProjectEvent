@@ -10,6 +10,11 @@ namespace BL
     {
 
         private EventDAL edal = new EventDAL();
+
+        public Event GetById(int eventId)
+        {
+            return edal.GetById(eventId);
+        }
     
         public List<Event> GetAllEvent()
         {

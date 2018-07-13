@@ -69,7 +69,7 @@ namespace DAL
             return user;
         }
 
-        public User GetByName(int userID)
+        public User GetByID(int? userID)
         {
             if (connection.State == System.Data.ConnectionState.Closed)
             {
@@ -88,7 +88,7 @@ namespace DAL
             return c;
         }
 
-        internal User GetByName(string userID, MySqlConnection connection)
+        internal User GetByID(int? userID, MySqlConnection connection)
         {
             query = @"select user_id, user_name, user_password, type_account, name_user, age, job, address, email, phone_number
                         from UserDB where user_id=" + userID + ";";

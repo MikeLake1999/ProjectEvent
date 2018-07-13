@@ -31,7 +31,7 @@ namespace DAL
             connection.Close();
             return ev;
         }
-        public Event GetById(int eventId)
+        public Event GetById(int? eventId)
         {
             if (connection.State == System.Data.ConnectionState.Closed)
             {
@@ -50,7 +50,7 @@ namespace DAL
             return c;
         }
 
-        internal Event GetById(int eventId, MySqlConnection connection)
+        internal Event GetById(int? eventId, MySqlConnection connection)
         {
             query = @"select event_id, event_name, description, event_time, address
                         from EventDB where event_id=" + eventId + ";";
@@ -86,21 +86,27 @@ namespace DAL
             try
             {
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@event_Name", c.Name_Event);
-                cmd.Parameters["@event_Name"].Direction = System.Data.ParameterDirection.Input;
-                cmd.Parameters.AddWithValue("@Address", c.Address_Event);
-                cmd.Parameters["@Address"].Direction = System.Data.ParameterDirection.Input;
-                cmd.Parameters.AddWithValue("@Description", c.Description);
-                cmd.Parameters["@Description"].Direction = System.Data.ParameterDirection.Input;
-                cmd.Parameters.AddWithValue("@Event_Time", c.Time);
-                cmd.Parameters["@Event_Time"].Direction = System.Data.ParameterDirection.Input;
-                cmd.Parameters.AddWithValue("@event_Id", MySqlDbType.Int32);
-                cmd.Parameters["@event_Id"].Direction = System.Data.ParameterDirection.Output;
-                cmd.ExecuteNonQuery();
-                result = (int)cmd.Parameters["@event_Id"].Value;
+                cmd.Parameters.AddWithValue("@eventName", c.Name_Event);
+                cmd.Parameters["@eventName"].Direction = System.Data.ParameterDirection.Input;
+
+                cmd.Parameters.AddWithValue("@eventAddress", c.Address_Event);
+                cmd.Parameters["@eventAddress"].Direction = System.Data.ParameterDirection.Input;
+
+                cmd.Parameters.AddWithValue("@eventDescription", c.Description);
+                cmd.Parameters["@eventDescription"].Direction = System.Data.ParameterDirection.Input;
+
+                cmd.Parameters.AddWithValue("@eventTime", c.Time);
+                cmd.Parameters["@eventTime"].Direction = System.Data.ParameterDirection.Input;
+
+                cmd.Parameters.AddWithValue("@eventId", MySqlDbType.Int32);
+                cmd.Parameters["@eventId"].Direction = System.Data.ParameterDirection.Output;
+                
+                result = cmd.ExecuteNonQuery();
+                result = (int)cmd.Parameters["@eventId"].Value;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace);
             }
             finally
             {

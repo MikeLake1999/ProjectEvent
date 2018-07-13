@@ -22,6 +22,11 @@ namespace BL
             return udal.Login(username, password);
         }
 
+        public User GetById(int userId)
+        {
+            return udal.GetByID(userId);
+        }
+
         public List<User> GetAllUser()
         {
             return udal.GetAllUser();

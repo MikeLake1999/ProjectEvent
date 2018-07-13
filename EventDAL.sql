@@ -30,21 +30,27 @@ create table if not exists EventDB(
 
 
 create table if not exists EventDetailsDB(
-	user_name varchar(50) not null,
+	user_id int not null,
     event_id int not null,
     event_status varchar(50) not null,
-    constraint pk_EventDetails primary key(user_name, event_id),
-    constraint fk_EventDetails_Users foreign key(user_name) references UserDB(user_name),
+    constraint pk_EventDetails primary key(user_id, event_id),
+    constraint fk_EventDetails_Users foreign key(user_id) references UserDB(user_id),
     constraint fk_EventDetails_Events foreign key(event_id) references EventDB(event_id)
     
 );
 delimiter $$
-create procedure sp_createEvent(IN event_Name varchar(100), IN Address varchar(100),IN Description varchar(100), In Event_Time varchar(10), OUT eventId int)
+create procedure sp_createEvent(IN eventName varchar(100), IN eventAddress varchar(100),IN eventDescription varchar(100), In eventTime varchar(10), OUT eventId int)
 begin
-	insert into EventDB(event_name, address, description, event_time) values (event_Name, Address, Description, Event_Time); 
+	insert into EventDB(event_name, address, description, event_time) values (eventName, eventAddress, eventDescription, eventTime); 
     select max(event_id) into eventId from EventDB;
 end $$
 delimiter ;
+
+call sp_createEvent('No name', 'No name', 'Nothing', '12h', @idd );
+
+select @idd;
+
+
 
 insert into UserDB(user_name, user_password, name_user, age, type_account, job, address, email, phone_number) values
 	('manager','123456','manager',18, 0, 'Manager', 'Ha Noi', 'manager@gmail.com', 01695651555),
@@ -64,6 +70,7 @@ create user if not exists 'EventUser'@'localhost' identified by '123456789';
     grant all on UserDB to 'EventUser'@'localhost';
     grant all on EventDB to 'EventUser'@'localhost';
     grant all on EventDetailsDB to 'EventUser'@'localhost';
+grant all on EventDB.* to 'EventUser'@'localhost';
     
 select event_id, event_name,
 ifnull(address, '') as address
