@@ -197,15 +197,13 @@ namespace EP_Console
                     case 3:
                         Console.Clear();
                         var lists = ubl.GetAllUser();
-                        string line = ("\n|=======================================================================|\n");
-                        Console.WriteLine("\tDanh Sách Người Dùng\t");
-                        //Console.Write("|  Name\t\t|\tAge\t|\tJob\t|\tPhone Number\t|");
-                        Console.WriteLine("|  {0,-10}\t|\t{1,-10}\t|\t{2,-15}\t|\t{3,-20}\t|","Name","Age","Job","Phone Number");
+                        string line = ("\n|=======================================================================================|");
+                        Console.WriteLine("\t\tDanh Sách Người Dùng\t");
+                        Console.Write("|  {0,-10}\t|\t{1,5}\t|\t{2,-15}\t|\t{3,-20}\t|","Name","Age","Job","Phone Number");
                         Console.WriteLine(line);
                         foreach (var User in lists)
                         {
-                            //Console.WriteLine("|  {0,%5s}\t|{1,-10}|{2,-12}|{3,-15}|", User.Name, User.Age, User.Job, User.Phone);
-                            Console.WriteLine("|  {0,-10}\t|\t{1,-10}\t|\t{2,-15}\t|\t{3,-20}\t|", User.Name, User.Age, User.Job, User.Phone);
+                            Console.WriteLine("|  {0,-10}\t|\t{1,5}\t|\t{2,-15}\t|\t{3,-20}\t|", User.Name, User.Age, User.Job, User.Phone);
 
                         }
                         Console.Write("Press Anything To ComeBack................... ");
@@ -215,12 +213,13 @@ namespace EP_Console
                     case 4:
                         Console.Clear();
                         var list = ebl.GetAllEvent();
-                        string lin = ("\n================================================================================================================================\n");
-                        Console.Write(" Event ID  |          Name Event         |        Address         |             Description           |        Time       | ");
+                        string lin = ("\n|=======================================================================================================|");
+                        Console.WriteLine("\t\tDanh sách sự kiện");
+                        Console.Write("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-20}\t|  {4,-20} |","Event ID","Name","EventAddress","Description","Time");
                         Console.WriteLine(lin);
                         foreach (var Event in list)
                         {
-                            Console.WriteLine("{0,-20}{1,-10}{2,-12}{3,-15}{4,-16}", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
+                            Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-20}\t|  {4,-20} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
                         }
                         Console.Write("Press Anything To ComeBack................... ");
                         Console.ReadLine();
