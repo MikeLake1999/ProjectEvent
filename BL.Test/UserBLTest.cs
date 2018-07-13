@@ -13,12 +13,18 @@ namespace BL.test
         UserBL ubl = new UserBL();
         
         
+        
         [Fact]
         public void GetAllUser_test()
         {
             List<User> listUser = ubl.GetAllUser();
             Assert.NotNull(listUser);
         }
-        
+
+        [Fact]
+        public void GetUserById_TestNULL()
+        {
+            Assert.Null(ubl.GetById(-1));                                                                             
+        }
     }
 }
