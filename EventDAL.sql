@@ -39,11 +39,11 @@ create table if not exists EventDetailsDB(
     
 );
 delimiter $$
-<<<<<<< HEAD
+
 create procedure sp_createEvent(IN eventName varchar(100), IN eventAddress varchar(100),IN eventDescription varchar(100), In eventTime varchar(10), OUT eventId int)
-=======
+
 create procedure sp_createEvent(IN event_Name varchar(100), IN Address varchar(100),IN Description varchar(500), In Event_Time varchar(50), OUT eventId int)
->>>>>>> 3172b1cc3384ff467636af582bdabbcfc6f710dc
+
 begin
 	insert into EventDB(event_name, address, description, event_time) values (eventName, eventAddress, eventDescription, eventTime); 
     select max(event_id) into eventId from EventDB;
