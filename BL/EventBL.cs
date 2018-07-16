@@ -15,6 +15,11 @@ namespace BL
         {
             return edal.GetById(eventId);
         }
+
+        public int AddEvent(Event e)
+        {
+            return edal.AddEvent(e) ?? 0;
+        }
     
         public List<Event> GetAllEvent()
         {

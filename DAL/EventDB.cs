@@ -11,23 +11,24 @@ namespace DAL
         private MySqlConnection connection = DbConfiguration.OpenConnection();
         private MySqlDataReader reader;
 
-         public List<Event> GetAllEvent()
+        public List<Event> GetAllEvent()
         {
             List<Event> ev = new List<Event>();
-            string  query = "Select event_id, event_name, address, description, event_time from EventDB;";
-            if(connection.State == System.Data.ConnectionState.Closed){
+            string query = "Select event_id, event_name, address, description, event_time from EventDB;";
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
                 connection.Open();
             }
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                using(reader = cmd.ExecuteReader())
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            using (reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
                 {
-                
-                    while(reader.Read())
-                    {
-                        ev.Add(GetEvent(reader));
-                    }
-                    reader.Close();
+                    ev.Add(GetEvent(reader));
                 }
+                reader.Close();
+            }
             connection.Close();
             return ev;
         }
@@ -100,7 +101,7 @@ namespace DAL
 
                 cmd.Parameters.AddWithValue("@eventId", MySqlDbType.Int32);
                 cmd.Parameters["@eventId"].Direction = System.Data.ParameterDirection.Output;
-                
+
                 result = cmd.ExecuteNonQuery();
                 result = (int)cmd.Parameters["@eventId"].Value;
             }

@@ -5,7 +5,6 @@ create database if not exists EventDB char set 'utf8';
 use EventDB;
 
 
-
 create table if not exists UserDB(
 	user_id int auto_increment primary key,
     user_name varchar(50) not null,
@@ -38,17 +37,26 @@ create table if not exists EventDetailsDB(
     constraint fk_EventDetails_Events foreign key(event_id) references EventDB(event_id)
     
 );
+
+
+
 delimiter $$
+<<<<<<< HEAD
+create procedure sp_createEvent(IN eventName varchar(100), IN eventAddress varchar(100),IN eventDescription varchar(500), In eventTime varchar(50), OUT eventId int)
+=======
 
 create procedure sp_createEvent(IN eventName varchar(100), IN eventAddress varchar(100),IN eventDescription varchar(100), In eventTime varchar(10), OUT eventId int)
 
 create procedure sp_createEvent(IN event_Name varchar(100), IN Address varchar(100),IN Description varchar(500), In Event_Time varchar(50), OUT eventId int)
 
+>>>>>>> 847cc9a2aeb90f655ca244a31c2b12dcbc316dba
 begin
 	insert into EventDB(event_name, address, description, event_time) values (eventName, eventAddress, eventDescription, eventTime); 
     select max(event_id) into eventId from EventDB;
 end $$
 delimiter ;
+
+
 
 call sp_createEvent('No name', 'No name', 'Nothing', '12h', @idd );
 
@@ -56,11 +64,12 @@ select @idd;
 
 
 
+
 insert into UserDB(user_name, user_password, name_user, age, type_account, job, address, email, phone_number) values
-	('manager','123456','manager',18, 0, 'Manager', 'Ha Noi', 'manager@gmail.com','01695651555'),
-    ('staff','123456','staff',18, 1, 'Dicrector', 'Ha Noi', 'staff@gmail.com','0987455887'),
+	('manager','123456','Hồ Đức Hiếu',18, 0, 'Manager', 'Ha Noi', 'manager@gmail.com','01695651555'),
+    ('staff','123456','Tôi là Ai',18, 1, 'Dicrector', 'Ha Noi', 'staff@gmail.com','0987455887'),
     ('hoangtuan','123456789','Hoàng Tuấn',18,1,'Student','Ha noi','hoangtuan124@gmail.com','01669091174'),
-    ('lananhi29','anh147852','Lan Anh',19,1,'Student','Thanh Hoa','lananhlun@gmail.com','01669784822');
+    ('lananh','123456789','Lan Anh',19,1,'Student','Thanh Hoa','lananhlun@gmail.com','01669784822');
 select * from UserDB;
 
 insert into EventDB(event_name, address, description, event_time) values

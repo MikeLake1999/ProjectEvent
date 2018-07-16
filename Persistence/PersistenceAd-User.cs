@@ -4,6 +4,7 @@ namespace Persistence
 {
     public class User
     {
+        public int? User_ID {set;get;}
         public string Name {set;get;}
         public int? Age {set;get;}
         public string Address {set;get;}
@@ -16,9 +17,10 @@ namespace Persistence
 
         public User() { }
 
-        public User(string Name, int? Age, string Address, string Email, string Phone, string AccountType,
+        public User(int? User_ID, string Name, int? Age, string Address, string Email, string Phone, string AccountType,
         string User_Name, string Password)
         {
+            this.User_ID = User_ID;
             this.Name = Name;
             this.Age = Age;
             this.Address = Address;

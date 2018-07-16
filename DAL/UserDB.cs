@@ -50,7 +50,7 @@ namespace DAL
         public List<User> GetAllUser()
         {
             List<User> user = new List<User>();
-            string query = @"Select user_name, user_password, type_account, name_user, age, job, address, email, phone_number from UserDB;";
+            string query = @"Select user_id, user_name, user_password, type_account, name_user, age, job, address, email, phone_number from UserDB;";
             if (connection.State == System.Data.ConnectionState.Closed)
             {
                 connection.Open();
@@ -105,6 +105,7 @@ namespace DAL
         private User GetUser(MySqlDataReader reader)
         {
             User user = new User();
+            user.User_ID = reader.GetInt32("user_id");
             user.Name = reader.GetString("name_user");
             user.Age = reader.GetInt32("age");
             user.Address = reader.GetString("address");
