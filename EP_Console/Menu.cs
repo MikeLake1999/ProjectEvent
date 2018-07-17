@@ -147,6 +147,9 @@ namespace EP_Console
                 Console.Clear();
                 Menus x = new Menus();
                 EventDetailsBL edbl = new EventDetailsBL();
+                Invited cc = new Invited();
+                EventBL ebl = new EventBL();
+                var lists = ebl.GetAllEvent();
                 var list = edbl.GetAllEvent();
                 string[] staffmenu = { "Hòm Thư", "Đăng xuất." };
                 do
@@ -158,14 +161,48 @@ namespace EP_Console
                             Console.Clear();
                             string lin = ("\n|=======================================================================================================|");
                             Console.WriteLine("\t\tDanh sách lời mời sự kiện");
-                            Console.Write("|  {0,-5}\t|  {1,-5}\t|", "Mã Sự Kiện", "Nội Dung");
                             Console.WriteLine(lin);
                             foreach (var Event in list)
                             {
                                 if (ubl.Login(un, pw).User_ID == Event.EventDetails_UserID)
                                 {
-                                    Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|", Event.EventDetails_EventID, Event.Status);
+                                    Console.WriteLine(lin);
+                                    Console.WriteLine("- Bạn có lời mời sự kiện với mã sự kiện là: {0,-5}\t", Event.EventDetails_EventID);
+                                    Console.WriteLine(lin);
                                 }
+                            }
+                            Console.Write("- Nhập Mã Sự Kiện để xem chi tiết sự kiện hoặc bấm 0 để thoát: ");
+                            int ss = Convert.ToInt32(Console.ReadLine());
+                            cc.EventDetails_EventID = ss;
+                            switch (ss)
+                            {
+                                case 0:
+                                    continue;
+
+                                default:
+                                    break;
+                            }
+
+
+                            Console.WriteLine("\n>>(Danh sách sự kiện)<<");
+                            foreach (var Event in lists)
+                            {
+                                if (ss == Event.ID_Event)
+                                    Console.WriteLine("\n- Tên Sự Kiện: {0} \n- Địa chỉ Sự Kiện: {1} \n- Mô Tả: {2} \n- Ngày Giờ: {3}", Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
+                            }
+
+                            Console.Write("- Bạn có muốn tham gia sự kiện không? (Gõ 1 để tham gia/ Gõ 0 để từ chối)?: ");
+                            string choices = Console.ReadLine();
+                            switch (choices)
+                            {
+                                case "1":
+                                    edbl.UpdateEventDetailss(cc);
+                                    break;
+                                case "0":
+                                    edbl.UpdateEventDetails(cc);
+                                    break;
+                                default:
+                                    break;
                             }
                             Console.Write("Press Anything To ComeBack................... ");
                             Console.ReadLine();
@@ -225,6 +262,7 @@ namespace EP_Console
             EventDetailsBL edbl = new EventDetailsBL();
             var list = ebl.GetAllEvent();
             var lists = ubl.GetAllUser();
+            var listss = edbl.GetAllEvent();
             Console.Clear();
             string[] managermenu = { "Tạo Sự Kiện", "Gửi thư mời ", "Xem danh sách người dùng", "Xem danh sách sự kiện", "Reset", "Đăng xuất" };
             do
@@ -238,50 +276,51 @@ namespace EP_Console
                         while (true)
                         {
                             Console.Clear();
-                            Console.WriteLine("======== Add a new Item ========");
+                            Console.WriteLine("======== Làm mới sự kiện ========");
                             if (c.Name_Event == null)
                             {
-                                Console.Write("- Input Event Name : ");
+                                Console.Write("- Nhập tên sự kiện : ");
                                 string p = Console.ReadLine();
                                 if (p == "") continue;
 
                                 c.Name_Event = p;
                             }
-                            else { Console.WriteLine("- Input Event Name : " + c.Name_Event); }
+                            else { Console.WriteLine("- Nhập tên sự kiện : " + c.Name_Event); }
 
                             if (c.Address_Event == null)
                             {
-                                Console.Write("- Input Address Event : ");
+                                Console.Write("- Nhập địa chỉ sự kiện : ");
                                 string p = Console.ReadLine();
                                 if (p == "") continue;
 
                                 c.Address_Event = p;
                             }
-                            else { Console.WriteLine("- Input Address Event : " + c.Address_Event); }
+                            else { Console.WriteLine("- Nhập địa chỉ sự kiện : " + c.Address_Event); }
 
                             if (c.Description == null)
                             {
-                                Console.Write("- Input Event Description : ");
+                                Console.Write("- Nhập mô tả sự kiện : ");
                                 string p = Console.ReadLine();
                                 if (p == "") continue;
 
                                 c.Description = p;
                             }
-                            else { Console.WriteLine("- Input Event Description : " + c.Description); }
+                            else { Console.WriteLine("- Nhập mô tả sự kiện : " + c.Description); }
 
                             if (c.Time == null)
                             {
-                                Console.Write("- Input Event Time : ");
+                                Console.Write("- Thời gian sự kiện diễn ra : ");
                                 string p = Console.ReadLine();
                                 if (p == "") continue;
 
                                 c.Time = p;
                             }
-                            else { Console.WriteLine("- Input Event Time : " + c.Time); }
+                            else { Console.WriteLine("- Thời gian sự kiện diễn ra : " + c.Time); }
                             break;
                         }
                         Console.WriteLine("- Event ID: " + ebl.AddEvent(c));
-                        Console.Write("Press Anything To ComeBack................... ");
+                        Console.Write("- Tạo sự kiện thành công! ");
+
                         Console.ReadLine();
                         break;
 
@@ -296,11 +335,11 @@ namespace EP_Console
                         {
                             string lins = ("\n|=======================================================================================================|");
                             Console.WriteLine("\t\tDanh sách sự kiện");
-                            Console.Write("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-20}\t|  {4,-20} |", "Mã Sự Kiện", "Tên Sự Kiện", "Địa chỉ Sự Kiện", "Mô Tả", "Ngày Giờ");
+                            Console.Write("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-100}\t|  {4,-20} |", "Mã Sự Kiện", "Tên Sự Kiện", "Địa chỉ Sự Kiện", "Mô Tả", "Ngày Giờ");
                             Console.WriteLine(lins);
                             foreach (var Event in list)
                             {
-                                Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-20}\t|  {4,-20} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
+                                Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-100}\t|  {4,-20} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
                             }
 
                             if (cc.EventDetails_EventID == null)
@@ -315,11 +354,11 @@ namespace EP_Console
 
                             string liness = ("\n|=======================================================================================|");
                             Console.WriteLine("\t\tDanh Sách Người Dùng\t");
-                            Console.Write("|  {0,-10}\t|\t{1,15}\t|\t{2,30}\t|\t{3,-20}\t|\t{4,-20}\t|", "Mã Người Dùng", "Họ và Tên", "Tuổi", "Nghành Nghề", "Số Điện Thoại");
+                            Console.Write("|  {0,-15}\t|  {1,-15}\t|  {2,-5}\t|  {3,-20}\t|  {4,-20}\t|", "Mã Người Dùng", "Họ và Tên", "Tuổi", "Nghành Nghề", "Số Điện Thoại");
                             Console.WriteLine(liness);
                             foreach (var User in lists)
                             {
-                                Console.WriteLine("|  {0,-10}\t|\t{1,15}\t|\t{2,30}\t|\t{3,-20}\t|\t{4,-20}\t|", User.User_ID, User.Name, User.Age, User.Job, User.Phone);
+                                Console.WriteLine("|  {0,-15}\t|  {1,-15}\t|  {2,-5}\t|  {3,-20}\t|  {4,-20}\t|", User.User_ID, User.Name, User.Age, User.Job, User.Phone);
 
                             }
 
@@ -336,8 +375,8 @@ namespace EP_Console
                             if (cc.Status == null)
                             {
                                 Console.Write("- Input Status : ");
-                                string p = Console.ReadLine();
-                                if (p == "") continue;
+                                int p = Convert.ToInt32(Console.ReadLine());
+
 
                                 cc.Status = p;
                             }
@@ -346,18 +385,17 @@ namespace EP_Console
                             break;
                         }
                         Console.WriteLine("- Gửi Thư Thành Công!");
-                        Console.Write("Press Anything To ComeBack................... ");
                         Console.ReadLine();
                         break;
                     case 3:
                         Console.Clear();
                         string line = ("\n|=======================================================================================|");
                         Console.WriteLine("\t\tDanh Sách Người Dùng\t");
-                        Console.Write("|  {0,-10}\t|\t{1,15}\t|\t{2,30}\t|\t{3,-20}\t|\t{4,-20}\t|", "Mã Người Dùng", "Họ và Tên", "Tuổi", "Nghành Nghề", "Số Điện Thoại");
+                        Console.Write("|  {0,-15}\t|  {1,-15}\t|  {2,-5}\t|  {3,-20}\t|  {4,-20}\t|", "Mã Người Dùng", "Họ và Tên", "Tuổi", "Nghành Nghề", "Số Điện Thoại");
                         Console.WriteLine(line);
                         foreach (var User in lists)
                         {
-                            Console.WriteLine("|  {0,-10}\t|\t{1,15}\t|\t{2,30}\t|\t{3,-20}\t|\t{4,-20}\t|", User.User_ID, User.Name, User.Age, User.Job, User.Phone);
+                            Console.WriteLine("|  {0,-15}\t|  {1,-15}\t|  {2,-5}\t|  {3,-20}\t|  {4,-20}\t|", User.User_ID, User.Name, User.Age, User.Job, User.Phone);
 
                         }
                         Console.Write("Press Anything To ComeBack................... ");
@@ -368,11 +406,32 @@ namespace EP_Console
                         Console.Clear();
                         string lin = ("\n|=======================================================================================================|");
                         Console.WriteLine("\t\tDanh sách sự kiện");
-                        Console.Write("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-20}\t|  {4,-20} |", "Mã Sự Kiện", "Tên Sự Kiện", "Địa chỉ Sự Kiện", "Mô Tả", "Ngày Giờ");
+                        Console.Write("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-30}\t|  {4,-20} |", "Mã Sự Kiện", "Tên Sự Kiện", "Địa chỉ Sự Kiện", "Mô Tả", "Ngày Giờ");
                         Console.WriteLine(lin);
                         foreach (var Event in list)
                         {
-                            Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-20}\t|  {4,-20} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
+                            Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-100}\t|  {4,-20} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
+                        }
+
+                        Console.Write("- Nhập Mã Sự Kiện để xem chi tiết sự kiện hoặc bấm 0 để thoát: ");
+                        int ss = Convert.ToInt32(Console.ReadLine());
+                        switch (ss)
+                        {
+                            case 0:
+                                continue;
+
+                            default: 
+                                break;
+                        }
+
+                        Console.WriteLine("\t\tDanh sách lời mời sự kiện");
+                        Console.Write("|  {0,-5}\t|  {1,-5}\t|", "Mã Người Dùng", "Tình Trạng Tham Gia");
+                        Console.WriteLine(lin);
+                        foreach (var Event in listss)
+                        {
+                            if (ss == Event.EventDetails_EventID)
+                            Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|", Event.EventDetails_UserID, Event.Status);
+
                         }
                         Console.Write("Press Anything To ComeBack................... ");
                         Console.ReadLine();
