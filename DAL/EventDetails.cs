@@ -39,7 +39,7 @@ namespace DAL
             Invited c = new Invited();
             c.EventDetails_EventID = reader.GetInt32("event_id");
             c.EventDetails_UserID = reader.GetInt32("user_id");
-            c.Status = reader.GetInt32("event_status");
+            c.Status = reader.GetString("event_status");
             return c;
         }
 
@@ -82,7 +82,7 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 0 where event_id = @EventDetails_ID;", connection);
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'None' where event_id = @EventDetails_ID;", connection);
             try
             {
                 cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_EventID);
@@ -108,7 +108,7 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 1 where event_id = @EventDetails_ID;", connection);
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Tham Gia' where event_id = @EventDetails_ID;", connection);
             try
             {
                 cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_EventID);

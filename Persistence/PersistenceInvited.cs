@@ -8,6 +8,6 @@ namespace Persistence
         public int? EventDetails_EventID {set;get;}
 
         public int? EventDetails_UserID {set;get;}
-        public int? Status {set;get;}
+        public string Status {set;get;}
     }
 }

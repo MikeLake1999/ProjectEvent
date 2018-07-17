@@ -152,6 +152,14 @@ namespace EP_Console
                 var lists = ebl.GetAllEvent();
                 var list = edbl.GetAllEvent();
                 string[] staffmenu = { "Hòm Thư", "Đăng xuất." };
+                if (list == null)
+                    {
+                        Console.Write("=================>> Bạn Không Có Thư <<");
+                    }
+                    else 
+                    {
+                        Console.Write("=================>> Bạn Có Thư <<");
+                    }
                 do
                 {
                     int staff = Menu("Chào Bạn", staffmenu);
@@ -161,14 +169,15 @@ namespace EP_Console
                             Console.Clear();
                             string lin = ("\n|=======================================================================================================|");
                             Console.WriteLine("\t\tDanh sách lời mời sự kiện");
+                            Console.Write("|  {0,-5}\t|  {1,-5}\t|", "Mã Sự Kiện", "Tình Trạng Tham Gia");
                             Console.WriteLine(lin);
                             foreach (var Event in list)
                             {
                                 if (ubl.Login(un, pw).User_ID == Event.EventDetails_UserID)
                                 {
-                                    Console.WriteLine(lin);
-                                    Console.WriteLine("- Bạn có lời mời sự kiện với mã sự kiện là: {0,-5}\t", Event.EventDetails_EventID);
-                                    Console.WriteLine(lin);
+                                    
+                                     Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|", Event.EventDetails_EventID, Event.Status);
+                                    
                                 }
                             }
                             Console.Write("- Nhập Mã Sự Kiện để xem chi tiết sự kiện hoặc bấm 0 để thoát: ");
@@ -374,13 +383,13 @@ namespace EP_Console
 
                             if (cc.Status == null)
                             {
-                                Console.Write("- Input Status : ");
-                                int p = Convert.ToInt32(Console.ReadLine());
+                                Console.Write("- Tình Trạng Tham Gia : ");
+                                string p = Console.ReadLine();
 
 
                                 cc.Status = p;
                             }
-                            else { Console.WriteLine("- Input Status : " + cc.Status); }
+                            else { Console.WriteLine("- Tình Trạng Tham Gia : " + cc.Status); }
                             edbl.AddEventDetails(cc);
                             break;
                         }
@@ -413,7 +422,7 @@ namespace EP_Console
                             Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-100}\t|  {4,-20} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
                         }
 
-                        Console.Write("- Nhập Mã Sự Kiện để xem chi tiết sự kiện hoặc bấm 0 để thoát: ");
+                        Console.Write("- Nhập Mã Sự Kiện để xem khách mời tham dự sự kiện hoặc bấm 0 để thoát: ");
                         int ss = Convert.ToInt32(Console.ReadLine());
                         switch (ss)
                         {
