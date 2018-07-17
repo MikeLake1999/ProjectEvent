@@ -39,7 +39,7 @@ namespace DAL
             Invited c = new Invited();
             c.EventDetails_EventID = reader.GetInt32("event_id");
             c.EventDetails_UserID = reader.GetInt32("user_id");
-            c.Status = reader.GetString("event_status");
+            c.Status = reader.GetInt32("event_status");
             return c;
         }
 
@@ -60,6 +60,58 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@User_ID", c.EventDetails_UserID);
 
                 cmd.Parameters.AddWithValue("@Event_Status", c.Status);
+
+                result = cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return result;
+        }
+
+        public int? UpdateEventDetails(Invited c)
+        {
+            int? result = null;
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
+                connection.Open();
+            }
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 0 where event_id = @EventDetails_ID;", connection);
+            try
+            {
+                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_EventID);
+
+                result = cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return result;
+        }
+
+        public int? UpdateEventDetailss(Invited c)
+        {
+            int? result = null;
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
+                connection.Open();
+            }
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 1 where event_id = @EventDetails_ID;", connection);
+            try
+            {
+                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_EventID);
 
                 result = cmd.ExecuteNonQuery();
 

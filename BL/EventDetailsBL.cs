@@ -17,6 +17,16 @@ namespace BL
         {
             return edal.AddEventDetails(e) ?? 0;
         }
+
+        public int UpdateEventDetails(Invited e)
+        {
+            return edal.UpdateEventDetails(e) ?? 0;
+        }
+
+         public int UpdateEventDetailss(Invited e)
+        {
+            return edal.UpdateEventDetailss(e) ?? 0;
+        }
     
         public List<Invited> GetAllEvent()
         {

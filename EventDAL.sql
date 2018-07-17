@@ -38,18 +38,17 @@ create table if not exists EventDetailsDB(
     
 );
 
+insert into EventDetailsDB (user_id, event_id, event_status) values 
+(2 , 1 , 'Nothing');
+select * from EventDetailsDB;	
+
+delete from EventDetailsDB where event_id = '1';
+
 
 
 delimiter $$
-<<<<<<< HEAD
 create procedure sp_createEvent(IN eventName varchar(100), IN eventAddress varchar(100),IN eventDescription varchar(500), In eventTime varchar(50), OUT eventId int)
-=======
 
-create procedure sp_createEvent(IN eventName varchar(100), IN eventAddress varchar(100),IN eventDescription varchar(100), In eventTime varchar(10), OUT eventId int)
-
-create procedure sp_createEvent(IN event_Name varchar(100), IN Address varchar(100),IN Description varchar(500), In Event_Time varchar(50), OUT eventId int)
-
->>>>>>> 847cc9a2aeb90f655ca244a31c2b12dcbc316dba
 begin
 	insert into EventDB(event_name, address, description, event_time) values (eventName, eventAddress, eventDescription, eventTime); 
     select max(event_id) into eventId from EventDB;
