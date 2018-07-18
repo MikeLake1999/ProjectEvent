@@ -82,7 +82,7 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'None' where event_id = @EventDetails_ID;", connection);
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Khong Tham Gia' where event_id = @EventDetails_ID;", connection);
             try
             {
                 cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_EventID);
