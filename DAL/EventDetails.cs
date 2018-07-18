@@ -127,5 +127,31 @@ namespace DAL
             return result;
         }
 
+        public int? UpdateEventDetailsss(Invited c)
+        {
+            int? result = null;
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
+                connection.Open();
+            }
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Se Tham Gia' where event_id = @EventDetails_ID;", connection);
+            try
+            {
+                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_EventID);
+
+                result = cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return result;
+        }
+
     }
 }
