@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using Persistence;
+using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -15,7 +16,9 @@ namespace DAL
         public List<Invited> GetAllEventDetails()
         {
             List<Invited> ev = new List<Invited>();
-            string query = "Select * from EventDetailsDB;";
+            Invited c = new Invited();
+            
+            string query = "select * from EventDetailsDB, UserDB, EventDB Where EventDetailsDB.user_id = UserDB.user_id and EventDetailsDB.event_id = EventDB.event_id;";
             if (connection.State == System.Data.ConnectionState.Closed)
             {
                 connection.Open();
@@ -23,9 +26,9 @@ namespace DAL
             MySqlCommand cmd = new MySqlCommand(query, connection);
             using (reader = cmd.ExecuteReader())
             {
-
                 while (reader.Read())
                 {
+                    
                     ev.Add(GetInvited(reader));
                 }
                 reader.Close();
@@ -40,8 +43,19 @@ namespace DAL
             c.EventDetails_EventID = reader.GetInt32("event_id");
             c.EventDetails_UserID = reader.GetInt32("user_id");
             c.Status = reader.GetString("event_status");
+            c.events = new Event();
+            c.events.Name_Event = reader.GetString("event_name");
+            c.events.Address_Event = reader.GetString("address");
+            c.events.Description = reader.GetString("description");
+            c.events.Time = reader.GetString("event_time");
+            c.users = new User();
+            c.users.Name = reader.GetString("name_user");
+            c.users.Phone = reader.GetString("phone_number");
+            c.users.Email = reader.GetString("Email");
             return c;
         }
+
+        
 
         public int? AddEventDetails(Invited c)
         {
@@ -50,7 +64,7 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("insert into EventDetailsDB (event_id, user_id, event_status) values (@Event_ID, @User_ID, @Event_Status);", connection);
+            MySqlCommand cmd = new MySqlCommand("insert into EventDetailsDB (event_id, user_id, event_status) values (@Event_ID, @User_ID, 'Chua Biet');", connection);
             try
             {
                 cmd.Parameters.Clear();
@@ -59,7 +73,6 @@ namespace DAL
 
                 cmd.Parameters.AddWithValue("@User_ID", c.EventDetails_UserID);
 
-                cmd.Parameters.AddWithValue("@Event_Status", c.Status);
 
                 result = cmd.ExecuteNonQuery();
 

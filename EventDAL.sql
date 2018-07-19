@@ -37,6 +37,8 @@ create table if not exists EventDetailsDB(
     constraint fk_EventDetails_Events foreign key(event_id) references EventDB(event_id)
     
 );
+select EventDetailsDB.user_id, UserDB.name_user, UserDB.user_id, UserDB.address, UserDB.phone_number from EventDetailsDB inner join UserDB where EventDetailsDB.user_id = UserDB.user_id;
+select * from EventDetailsDB, UserDB, EventDB Where EventDetailsDB.user_id = UserDB.user_id and EventDetailsDB.event_id = EventDB.event_id;
 
 insert into EventDetailsDB (user_id, event_id, event_status) values 
 (2 , 1 , 'Nothing');

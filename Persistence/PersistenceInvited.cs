@@ -9,5 +9,8 @@ namespace Persistence
 
         public int? EventDetails_UserID {set;get;}
         public string Status {set;get;}
+
+        public Event events{set;get;}
+        public User users {set;get;}
     }
 }
