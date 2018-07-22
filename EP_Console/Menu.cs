@@ -151,15 +151,15 @@ namespace EP_Console
                 EventBL ebl = new EventBL();
                 var lists = ebl.GetAllEvent();
                 var list = edbl.GetAllEvent();
-                string[] staffmenu = { "Hòm Thư", "Đăng xuất." };
+                string[] staffmenu = { "Lời Mời Sự Kiện", "Đăng xuất." };
                 if (list == null)
-                    {
-                        Console.Write("=================>> Bạn Không Có Thư <<");
-                    }
-                    else 
-                    {
-                        Console.Write("=================>> Bạn Có Thư <<");
-                    }
+                {
+                    Console.Write("=================>> Bạn Không Có Lời Mời Tham Gia Sự Kiện <<");
+                }
+                else
+                {
+                    Console.Write("=================>> Bạn Có Lời Mời Tham Gia Sự Kiện <<");
+                }
                 do
                 {
                     int staff = Menu("Chào Bạn", staffmenu);
@@ -173,47 +173,51 @@ namespace EP_Console
                             Console.WriteLine(lin);
                             foreach (var Event in list)
                             {
-                                if (ubl.Login(un, pw).User_ID == Event.EventDetails_UserID)
+                                if (ubl.Login(un, pw).User_ID == Convert.ToInt32(Event.EventDetails_UserID))
                                 {
-                                    
-                                     Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-5}\t|  {3,-5}\t|  {4,-5}\t|  {5,-5}\t|", Event.EventDetails_EventID , Event.events.Name_Event, Event.events.Address_Event, Event.events.Description, Event.events.Time, Event.Status);
-                                    
+
+                                    Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-5}\t|  {3,-5}\t|  {4,-5}\t|  {5,-5}\t|", Event.EventDetails_EventID, Event.events.Name_Event, Event.events.Address_Event, Event.events.Description, Event.events.Time, Event.Status);
+
                                 }
                             }
-                            Console.Write("- Chọn No sự kiện sự kiện hoặc bấm 0 để thoát: ");
+                            cc.EventDetails_UserID = ubl.Login(un, pw).User_ID;
+                            Console.Write("- Chọn Mã sự kiện để tham dự hoặc bấm 0 để thoát: ");
                             int ss = Convert.ToInt32(Console.ReadLine());
-                            cc.EventDetails_EventID = ss;
+                            
                             switch (ss)
                             {
                                 case 0:
                                     continue;
 
                                 default:
+                                    // Console.WriteLine("Bạn Đã Nhập sai! Vui lòng nhập lại!");
                                     break;
                             }
-
-
-                            Console.WriteLine("\n>>(Danh sách sự kiện)<<");
-                            foreach (var Event in lists)
-                            {
-                                if (ss == Event.ID_Event)
-                                    Console.WriteLine("\n- Tên Sự Kiện: {0} \n- Địa chỉ Sự Kiện: {1} \n- Mô Tả: {2} \n- Ngày Giờ: {3}", Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
-                            }
-
-                            Console.Write("- Bạn có muốn tham gia sự kiện không? (Gõ 1 để tham gia/ Gõ 0 để từ chối)?: ");
+                            Console.Write("- Bạn có muốn tham gia sự kiện không?");
+                            Console.Write("\n  1. Tham Gia");
+                            Console.Write("\n  2. Không Tham Gia");
+                            Console.Write("\n  3. Sẽ Tham Gia");
+                            Console.Write("\n- Chọn: ");
                             string choices = Console.ReadLine();
                             switch (choices)
                             {
                                 case "1":
                                     edbl.UpdateEventDetailss(cc);
+                                    Console.Write("- Bạn Đã Tham Gia Sự Kiện!");
                                     break;
-                                case "0":
+                                case "2":
                                     edbl.UpdateEventDetails(cc);
+                                    Console.Write("- Bạn Đã Từ Chối Sự Kiện!");
+                                    break;
+                                case "3":
+                                    edbl.UpdateEventDetailsss(cc);
+                                    Console.Write("- Bạn Sẽ Tham Gia Sự Kiện!");
                                     break;
                                 default:
+                                    // Console.WriteLine("Bạn Đã Nhập sai! Vui lòng nhập lại!");
                                     break;
                             }
-                            Console.Write("Press Anything To ComeBack................... ");
+                            Console.Write("\n- Nhập Phím Bất Kỳ Để Trờ Lại.......................................");
                             Console.ReadLine();
                             Console.Clear();
 
@@ -348,7 +352,7 @@ namespace EP_Console
                             Console.WriteLine(lins);
                             foreach (var Event in list)
                             {
-                                Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-100}\t|  {4,-20} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
+                                Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-50}\t|  {4,-20} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
                             }
 
                             if (cc.EventDetails_EventID == null)
@@ -371,26 +375,34 @@ namespace EP_Console
 
                             }
 
-                            if (cc.EventDetails_UserID == null)
+                            Console.Write("- Mời Người Dùng?");
+                            Console.Write("\n  1. Mời Từng Người Dùng");
+                            Console.Write("\n  2. Mời Tất Cả Người Dùng");
+                            Console.Write("\n- Chọn: ");
+                            string choices = Console.ReadLine();
+                            switch (choices)
                             {
-                                Console.Write("- Nhập mã người dùng : ");
-                                int p = Convert.ToInt32(Console.ReadLine());
+                                case "1":
+                                    if (cc.EventDetails_UserID == null)
+                                    {
+                                        Console.Write("- Nhập mã người dùng : ");
+                                        var p = Convert.ToInt32(Console.ReadLine());
 
 
-                                cc.EventDetails_UserID = p;
+                                        cc.EventDetails_UserID = p;
+                                    }
+                                    else { Console.WriteLine("- Nhập mã người dùng : " + cc.EventDetails_UserID); }
+
+
+                                    edbl.AddEventDetails(cc);
+                                    break;
+                                case "2":
+                                    edbl.AddEventDetailss(cc);
+                                    break;
+                                default:
+                                    // Console.WriteLine("Bạn Đã Nhập sai! Vui lòng nhập lại!");
+                                    break;
                             }
-                            else { Console.WriteLine("- Nhập mã người dùng : " + cc.EventDetails_UserID); }
-
-                            // if (cc.Status == null)
-                            // {
-                            //     Console.Write("- Tình Trạng Tham Gia : ");
-                            //     string p = Console.ReadLine();
-
-
-                            //     cc.Status = p;
-                            // }
-                            // else { Console.WriteLine("- Tình Trạng Tham Gia : " + cc.Status); }
-                            edbl.AddEventDetails(cc);
                             break;
                         }
                         Console.WriteLine("- Gửi Thư Thành Công!");
@@ -407,7 +419,7 @@ namespace EP_Console
                             Console.WriteLine("|  {0,-15}\t|  {1,-15}\t|  {2,-5}\t|  {3,-20}\t|  {4,-20}\t|", User.User_ID, User.Name, User.Age, User.Job, User.Phone);
 
                         }
-                        Console.Write("Press Anything To ComeBack................... ");
+                        Console.Write("- Nhập Phím Bất Kì Để Trờ Lại!................... ");
                         Console.ReadLine();
                         break;
 
@@ -422,14 +434,14 @@ namespace EP_Console
                             Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|  {2,-15}\t|  {3,-100}\t|  {4,-20} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
                         }
 
-                        Console.Write("- Nhập No để xem khách mời tham dự sự kiện hoặc bấm 0 để thoát: ");
+                        Console.Write("- Nhập Mã Sự Kiện để xem khách mời tham dự hoặc bấm 0 để thoát: ");
                         int ss = Convert.ToInt32(Console.ReadLine());
                         switch (ss)
                         {
                             case 0:
                                 continue;
 
-                            default: 
+                            default:
                                 break;
                         }
 
@@ -439,10 +451,10 @@ namespace EP_Console
                         foreach (var Event in listss)
                         {
                             if (ss == Event.EventDetails_EventID)
-                            Console.WriteLine("|  {0,-5}\t|  {1,-5}\t| {2,-5}\t| {3,-5}\t| {4,-5}\t|", Event.EventDetails_UserID, Event.users.Name, Event.users.Phone, Event.users.Email, Event.Status);
+                                Console.WriteLine("|  {0,-5}\t|  {1,-5}\t| {2,-5}\t| {3,-5}\t| {4,-5}\t|", Event.EventDetails_UserID, Event.users.Name, Event.users.Phone, Event.users.Email, Event.Status);
 
                         }
-                        Console.Write("Press Anything To ComeBack................... ");
+                        Console.Write("- Nhập Phím Bất Kì Để Trờ Lại!................... ");
                         Console.ReadLine();
                         break;
 
@@ -460,43 +472,6 @@ namespace EP_Console
             } while (true);
         }
 
-        // public void menuStaff(User us)
-        // {
-        //     Console.Clear();
-        //     Menus x = new Menus();
-        //     EventDetailsBL edbl = new EventDetailsBL();
-        //     UserBL ubl = new UserBL();
-        //     var list = edbl.GetAllEvent();
-        //     string[] staffmenu = { "Hòm Thư", "Đăng xuất." };
-        //     do
-        //     {
-        //         int staff = Menu("Chào Bạn", staffmenu);
-        //         switch (staff)
-        //         {
-        //             case 1:
-        //                 Console.Clear();
-        //                 string lin = ("\n|=======================================================================================================|");
-        //                 Console.WriteLine("\t\tDanh sách lời mời sự kiện");
-        //                 Console.Write("|  {0,-5}\t|  {1,-5}\t|", "Mã Sự Kiện", "Nội Dung");
-        //                 Console.WriteLine(lin);
-        //                 foreach (var Event in list)
-        //                 {
-        //                     if (Event.EventDetails_UserID == ubl.Login().User_ID)
-        //                     Console.WriteLine("|  {0,-5}\t|  {1,-5}\t|", Event.EventDetails_EventID, Event.Status);
-        //                 }
-        //                 Console.Write("Press Anything To ComeBack................... ");
-        //                 Console.ReadLine();
-        //                 Console.Clear();
-
-        //                 break;
-        //             case 2:
-        //                 Console.Clear();
-        //                 MenuChoice();
-        //                 break;
-        //         }
-        //     } 
-        //     while (true);
-        // }
         public string Password()
         {
             StringBuilder sb = new StringBuilder();
