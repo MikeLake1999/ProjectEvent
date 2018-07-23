@@ -37,15 +37,8 @@ create table if not exists EventDetailsDB(
     constraint fk_EventDetails_Events foreign key(event_id) references EventDB(event_id)
     
 );
-select EventDetailsDB.user_id, UserDB.name_user, UserDB.user_id, UserDB.address, UserDB.phone_number from EventDetailsDB inner join UserDB where EventDetailsDB.user_id = UserDB.user_id;
-select * from EventDetailsDB, UserDB, EventDB Where EventDetailsDB.user_id = UserDB.user_id and EventDetailsDB.event_id = EventDB.event_id;
 
-insert into EventDetailsDB (user_id, event_id, event_status) values 
-(2 , 1 , 'Nothing');
 select * from EventDetailsDB;	
-
-delete from EventDetailsDB where event_id = '1';
-
 
 
 delimiter $$
@@ -67,15 +60,22 @@ select @idd;
 
 
 insert into UserDB(user_name, user_password, name_user, age, type_account, job, address, email, phone_number) values
-	('manager','123456','Hồ Đức Hiếu',18, 0, 'Manager', 'Ha Noi', 'manager@gmail.com','01695651555'),
-    ('staff','123456','Tôi là Ai',18, 1, 'Dicrector', 'Ha Noi', 'staff@gmail.com','0987455887'),
-    ('hoangtuan','123456789','Hoàng Tuấn',18,1,'Student','Ha noi','hoangtuan124@gmail.com','01669091174'),
-    ('lananh','123456789','Lan Anh',19,1,'Student','Thanh Hoa','lananhlun@gmail.com','01669784822');
+	('manager','123456','Manager1',18, 0, 'Manager', 'Ha Noi', 'manager@gmail.com','01695651555'),
+    ('staff','123456','Hồ Đức Hiếu',18, 1, 'Producer', 'Ha Noi', 'staff@gmail.com','0987455887'),
+    ('hoangtuan','123456','Hoàng Tuấn',18,1,'Hoc Sinh','Ha noi','hoangtuan124@gmail.com','01669091174'),
+    ('nguyenvandung','123456','Nguyễn Văn Dũng',18,1,'Hoc sinh','Ha noi','vandung123@gmail.com','09169092344'),
+    ('ducnasa','123456','Đào Văn Đức',22,1,'Giao Vien','Ha noi','ducnasa@gmail.com','09123456789'),
+    ('nguyenxuansinh','123456','Nguyễn Xuân Sinh',28,1,'Giao Vien','Ha noi','xuannguyensinh@gmail.com','09987654321'),
+    ('vutranlam','123456','Vũ Trần Lâm',28,1,'Giao vien','Ha noi','vutranlam@gmail.com','0969696969'),
+    ('phamhang','123456','Phạm Hằng',25,1,'SRO cu','Ha noi','phamhang@gmail.com','0968745631'),
+    ('phanthanhtung','123456','Phan Thanh Tùng',25,1,'hoc sinh','Ha noi','tung123456@gmail.com','0965487423'),
+    ('Linh Trang','123456','Linh Trang',24,1,'Giao Vu','Ha noi','linhtrang124@gmail.com','0965487423'),
+    ('lananh','123456','Lan Anh',19,1,'Hoc Sinh','Thanh Hoa','lananhlun@gmail.com','01669784822');
 select * from UserDB;
 
 insert into EventDB(event_name, address, description, event_time) values
 	('BlueHole','Hai Duong','Nothing', '16h30' ),
-    ('CKTG','Hanoi', 'Nothing', '6h30');
+    ('Bao Ve Project cho sinh Vien VTCA','18 Tam Chinh, Quan Hoang Mai, Hanoi', 'Buoi Bao Ve Thu Project cho sinh Vien VTCA lop F06', '14h');
 select * from EventDB;
 
 

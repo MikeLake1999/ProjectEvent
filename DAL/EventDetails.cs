@@ -17,7 +17,7 @@ namespace DAL
         {
             List<Invited> ev = new List<Invited>();
             Invited c = new Invited();
-            
+
             string query = "select * from EventDetailsDB, UserDB, EventDB Where EventDetailsDB.user_id = UserDB.user_id and EventDetailsDB.event_id = EventDB.event_id;";
             if (connection.State == System.Data.ConnectionState.Closed)
             {
@@ -28,7 +28,7 @@ namespace DAL
             {
                 while (reader.Read())
                 {
-                    
+
                     ev.Add(GetInvited(reader));
                 }
                 reader.Close();
@@ -55,7 +55,7 @@ namespace DAL
             return c;
         }
 
-        
+
 
         public int? AddEventDetails(Invited c)
         {
@@ -67,11 +67,14 @@ namespace DAL
             MySqlCommand cmd = new MySqlCommand("insert into EventDetailsDB (event_id, user_id, event_status) values (@Event_ID, @User_ID, 'Chua Biet');", connection);
             try
             {
+
                 cmd.Parameters.Clear();
 
                 cmd.Parameters.AddWithValue("@Event_ID", c.EventDetails_EventID);
 
+
                 cmd.Parameters.AddWithValue("@User_ID", c.EventDetails_UserID);
+
 
 
                 result = cmd.ExecuteNonQuery();
@@ -88,6 +91,34 @@ namespace DAL
             return result;
         }
 
+        public int? AddEventDetailss(Invited c)
+        {
+            int? result = null;
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
+                connection.Open();
+            }
+            MySqlCommand cmd = new MySqlCommand("insert into EventDetailsDB (event_id, user_id, event_status) values (@Event_ID, 2, 'Chua Biet'), (@Event_ID, 3, 'Chua Biet'), (@Event_ID, 4, 'Chua Biet'), (@Event_ID, 5, 'Chua Biet'), (@Event_ID, 6, 'Chua Biet'), (@Event_ID, 7, 'Chua Biet'), (@Event_ID, 8, 'Chua Biet'), (@Event_ID, 9, 'Chua Biet'), (@Event_ID, 10, 'Chua Biet'), (@Event_ID, 11, 'Chua Biet');", connection);
+            try
+            {
+
+                cmd.Parameters.Clear();
+
+                cmd.Parameters.AddWithValue("@Event_ID", c.EventDetails_EventID);
+
+                result = cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+            }
+            return result;
+        }
+
         public int? UpdateEventDetails(Invited c)
         {
             int? result = null;
@@ -95,10 +126,10 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Khong Tham Gia' where event_id = @EventDetails_ID;", connection);
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Khong Tham Gia' where user_id = @EventDetails_ID;", connection);
             try
             {
-                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_EventID);
+                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_UserID);
 
                 result = cmd.ExecuteNonQuery();
 
@@ -121,10 +152,10 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Tham Gia' where event_id = @EventDetails_ID;", connection);
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Tham Gia' where user_id = @EventDetails_ID;", connection);
             try
             {
-                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_EventID);
+                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_UserID);
 
                 result = cmd.ExecuteNonQuery();
 
@@ -147,10 +178,10 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Se Tham Gia' where event_id = @EventDetails_ID;", connection);
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Se Tham Gia' where user_id = @EventDetails_ID;", connection);
             try
             {
-                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_EventID);
+                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_UserID);
 
                 result = cmd.ExecuteNonQuery();
 
