@@ -151,15 +151,18 @@ namespace EP_Console
                 EventBL ebl = new EventBL();
                 var lists = ebl.GetAllEvent();
                 var list = edbl.GetAllEvent();
-                string[] staffmenu = { "Lời Mời Sự Kiện", "Đăng xuất." };
-                if (list == null)
+                int i = 0;
+                foreach (var get in list)
                 {
-                    Console.Write("=================>> Bạn Không Có Lời Mời Tham Gia Sự Kiện <<");
+                    if (get.EventDetails_UserID == 2)
+                    {
+                        i++;
+                    }
                 }
-                else
-                {
-                    Console.Write("=================>> Bạn Có Lời Mời Tham Gia Sự Kiện <<");
-                }
+
+                Console.Write("=================>> Bạn có {0} lời mời tham gia sự kiện <<", Convert.ToString(i));
+                string[] staffmenu = { "Lời Mời Sự Kiện", "Đăng xuất" };
+
                 do
                 {
                     int staff = Menu("Chào Bạn", staffmenu);
@@ -197,6 +200,7 @@ namespace EP_Console
                             Console.Write("\n  1. Tham Gia");
                             Console.Write("\n  2. Không Tham Gia");
                             Console.Write("\n  3. Sẽ Tham Gia");
+                            Console.Write("\n  0. Thoát");
                             Console.Write("\n- Chọn: ");
                             string choices = Console.ReadLine();
                             switch (choices)
@@ -212,6 +216,8 @@ namespace EP_Console
                                 case "3":
                                     edbl.UpdateEventDetailsss(cc);
                                     Console.Write("- Bạn Sẽ Tham Gia Sự Kiện!");
+                                    break;
+                                case "0":
                                     break;
                                 default:
                                     // Console.WriteLine("Bạn Đã Nhập sai! Vui lòng nhập lại!");
@@ -331,9 +337,32 @@ namespace EP_Console
                             else { Console.WriteLine("- Thời gian sự kiện diễn ra : " + c.Time); }
                             break;
                         }
-                        Console.WriteLine("- Event ID: " + ebl.AddEvent(c));
-                        Console.Write("- Tạo sự kiện thành công! ");
+                        Console.Write(" Bạn có muốn tạo sự kiện này không? (C/K)");
 
+                        string choice = Console.ReadLine();
+                        switch (choice)
+                        {
+                            case "C":
+                                Console.WriteLine("- Event ID: " + ebl.AddEvent(c));
+                                Console.Write("- Tạo sự kiện thành công! ");
+                                break;
+                            case "c":
+                                Console.WriteLine("- Event ID: " + ebl.AddEvent(c));
+                                Console.Write("- Tạo sự kiện thành công! ");
+                                break;
+                            case "K":
+                                
+                                break;
+                            case "k":
+
+                                break;
+                            default:
+
+
+                                break;
+                        }
+
+                        Console.Write("\n - Nhập Phím Bất Kì Để Trờ Lại!................... ");
                         Console.ReadLine();
                         break;
 
@@ -376,6 +405,7 @@ namespace EP_Console
                             Console.Write("- Mời Người Dùng?");
                             Console.Write("\n  1. Mời Từng Người Dùng");
                             Console.Write("\n  2. Mời Tất Cả Người Dùng");
+                            Console.Write("\n  0. Thoát");
                             Console.Write("\n- Chọn: ");
                             string choices = Console.ReadLine();
                             switch (choices)
@@ -393,9 +423,13 @@ namespace EP_Console
 
 
                                     edbl.AddEventDetails(cc);
+                                    Console.WriteLine("- Gửi Lời Mời Thành Công!");
                                     break;
                                 case "2":
                                     edbl.AddEventDetailss(cc);
+                                    Console.WriteLine("- Gửi Lời Mời Thành Công!");
+                                    break;
+                                case "0":
                                     break;
                                 default:
                                     // Console.WriteLine("Bạn Đã Nhập sai! Vui lòng nhập lại!");
@@ -403,7 +437,8 @@ namespace EP_Console
                             }
                             break;
                         }
-                        Console.WriteLine("- Gửi Thư Thành Công!");
+
+                        Console.Write("- Nhập Phím Bất Kì Để Trờ Lại!................... ");
                         Console.ReadLine();
                         break;
                     case 3:
@@ -425,7 +460,7 @@ namespace EP_Console
                         Console.Clear();
                         string lin = ("\n|=====================================================================================================================================================================|\n");
                         Console.WriteLine("\t\tDanh sách sự kiện");
-                        Console.Write("|  {0,-5}  | {1,-35}  | {2,-39}  | {3,-48}  | {4,-15}|","Mã Sự Kiện","Tên Sự Kiện","Địa chỉ Sự Kiện","Mô Tả","Ngày Giờ");
+                        Console.Write("|  {0,-5}  | {1,-35}  | {2,-39}  | {3,-48}  | {4,-15}|", "Mã Sự Kiện", "Tên Sự Kiện", "Địa chỉ Sự Kiện", "Mô Tả", "Ngày Giờ");
                         Console.Write(lin);
                         foreach (var Event in list)
                         {

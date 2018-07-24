@@ -74,8 +74,7 @@ insert into UserDB(user_name, user_password, name_user, age, type_account, job, 
 select * from UserDB;
 
 insert into EventDB(event_name, address, description, event_time) values
-	('BlueHole','Hai Duong','Nothing', '16h30' ),
-    ('Bao Ve Project cho sinh Vien VTCA','18 Tam Chinh, Quan Hoang Mai, Hanoi', 'Buoi Bao Ve Thu Project cho sinh Vien VTCA lop F06', '14h');
+	('BlueHole','Hai Duong','Nothing', '16h30' );
 select * from EventDB;
 
 
