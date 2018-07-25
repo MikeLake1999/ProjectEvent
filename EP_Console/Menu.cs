@@ -182,64 +182,6 @@ namespace EP_Console
                     {
                         case "1":
                             ViewInvited(un, pw);
-                            // Console.Clear();
-                            // string lin = ("\n|====================================================================================================================================================================|");
-                            // Console.WriteLine("\t\tDanh sách lời mời sự kiện");
-                            // Console.Write("| {0,-5}  | {1,-35}  | {2,-15}  | {3,-51}  | {4,-15}  | {5,-20}  |", "No", "Tên sự kiện", "Địa chỉ", "Mô tả", "Thời gian", "Tình Trạng Tham Gia");
-                            // Console.WriteLine(lin);
-                            // foreach (var Event in list)
-                            // {
-                            //     if (ubl.Login(un, pw).User_ID == Convert.ToInt32(Event.EventDetails_UserID))
-                            //     {
-
-                            //         Console.WriteLine("| {0,-5}  | {1,-35}  | {2,-15}  | {3,-51}  | {4,-15}  | {5,-20}  |", Event.EventDetails_EventID, Event.events.Name_Event, Event.events.Address_Event, Event.events.Description, Event.events.Time, Event.Status);
-
-                            //     }
-                            // }
-                            // cc.EventDetails_UserID = ubl.Login(un, pw).User_ID;
-                            // Console.Write("- Chọn Mã sự kiện để tham dự hoặc bấm 0 để thoát: ");
-                            // int ss = Convert.ToInt32(Console.ReadLine());
-
-                            // switch (ss)
-                            // {
-                            //     case 0:
-                            //         continue;
-
-                            //     default:
-                            //         // Console.WriteLine("Bạn Đã Nhập sai! Vui lòng nhập lại!");
-                            //         break;
-                            // }
-                            // Console.Write("- Bạn có muốn tham gia sự kiện không?");
-                            // Console.Write("\n  1. Tham Gia");
-                            // Console.Write("\n  2. Không Tham Gia");
-                            // Console.Write("\n  3. Sẽ Tham Gia");
-                            // Console.Write("\n  0. Thoát");
-                            // Console.Write("\n- Chọn: ");
-                            // string choices = Console.ReadLine();
-                            // switch (choices)
-                            // {
-                            //     case "1":
-                            //         edbl.UpdateEventDetailss(cc);
-                            //         Console.Write("- Bạn Đã Tham Gia Sự Kiện!");
-                            //         break;
-                            //     case "2":
-                            //         edbl.UpdateEventDetails(cc);
-                            //         Console.Write("- Bạn Đã Từ Chối Sự Kiện!");
-                            //         break;
-                            //     case "3":
-                            //         edbl.UpdateEventDetailsss(cc);
-                            //         Console.Write("- Bạn Sẽ Tham Gia Sự Kiện!");
-                            //         break;
-                            //     case "0":
-                            //         break;
-                            //     default:
-                            //         // Console.WriteLine("Bạn Đã Nhập sai! Vui lòng nhập lại!");
-                            //         break;
-                            // }
-                            // Console.Write("\n- Nhập Phím Bất Kỳ Để Trờ Lại.......................................");
-                            // Console.ReadKey();
-
-
                             break;
                         case "2":
                             Console.Clear();
@@ -347,7 +289,7 @@ namespace EP_Console
 
                                 c.Time = p;
                             }
-                            else { Console.WriteLine("- Thời gian sự kiện diễn ra : " + c.Time); }
+                            else { Console.WriteLine("- Thời gian sự kiện diễn ra (Ngày/Tháng/Năm - Thời Gian) : " + c.Time); }
                             break;
                         }
                         Console.Write(" Bạn có muốn tạo sự kiện này không? (C/K)");
