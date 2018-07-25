@@ -126,10 +126,13 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Khong Tham Gia' where user_id = @EventDetails_ID;", connection);
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Khong Tham Gia' where user_id = @EventDetails_ID and event_id = @EventDetailss_ID;", connection);
             try
             {
+                cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_UserID);
+                cmd.Parameters.AddWithValue("@EventDetailss_ID", c.EventDetails_EventID);
+
 
                 result = cmd.ExecuteNonQuery();
 
@@ -152,10 +155,13 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Tham Gia' where user_id = @EventDetails_ID;", connection);
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Tham Gia' where user_id = @EventDetails_ID and event_id = @EventDetailss_ID;", connection);
             try
             {
+                cmd.Parameters.Clear();
+
                 cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_UserID);
+                cmd.Parameters.AddWithValue("@EventDetailss_ID", c.EventDetails_EventID);
 
                 result = cmd.ExecuteNonQuery();
 
@@ -178,11 +184,13 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Se Tham Gia' where user_id = @EventDetails_ID;", connection);
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Se Tham Gia' where user_id = @EventDetails_ID and event_id = @EventDetailss_ID;", connection);
             try
             {
-                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_UserID);
+                cmd.Parameters.Clear();
 
+                cmd.Parameters.AddWithValue("@EventDetails_ID", c.EventDetails_UserID);
+                cmd.Parameters.AddWithValue("@EventDetailss_ID", c.EventDetails_EventID);
                 result = cmd.ExecuteNonQuery();
 
             }

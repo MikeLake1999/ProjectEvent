@@ -86,6 +86,7 @@ namespace DAL
             MySqlCommand cmd = new MySqlCommand("sp_createEvent", connection);
             try
             {
+                cmd.Parameters.Clear();
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@eventName", c.Name_Event);
                 cmd.Parameters["@eventName"].Direction = System.Data.ParameterDirection.Input;

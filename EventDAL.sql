@@ -40,6 +40,8 @@ create table if not exists EventDetailsDB(
 
 select * from EventDetailsDB;	
 
+update EventDetailsDB set event_status = 'Tham Gia' where user_id = 2 and event_id = 2;
+
 
 delimiter $$
 create procedure sp_createEvent(IN eventName varchar(100), IN eventAddress varchar(100),IN eventDescription varchar(500), In eventTime varchar(50), OUT eventId int)
@@ -49,13 +51,6 @@ begin
     select max(event_id) into eventId from EventDB;
 end $$
 delimiter ;
-
-
-
-call sp_createEvent('No name', 'No name', 'Nothing', '12h', @idd );
-
-select @idd;
-
 
 
 
