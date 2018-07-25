@@ -144,53 +144,7 @@ namespace EP_Console
             }
             else if (ubl.Login(un, pw).AccountType == "1")
             {
-                Console.Clear();
-                Menus x = new Menus();
-                EventDetailsBL edbl = new EventDetailsBL();
-                Invited cc = new Invited();
-                EventBL ebl = new EventBL();
-                var lists = ebl.GetAllEvent();
-                var list = edbl.GetAllEvent();
-                int i = 0;
-                foreach (var get in list)
-                {
-                    if (get.EventDetails_UserID == 2)
-                    {
-                        i++;
-                    }
-                }
-
-                // Console.Write("=================>> Bạn có {0} lời mời tham gia sự kiện <<", Convert.ToString(i));
-                // string[] staffmenu = { "Lời Mời Sự Kiện", "Đăng xuất" };
-
-                do
-                {
-                    Console.Clear();
-                    Console.WriteLine(row1);
-                    Console.WriteLine("Chào Bạn");
-                    Console.WriteLine(row2);
-                    Console.WriteLine("1. Lời Mời Sự Kiện({0})", i);
-                    Console.WriteLine("2. Đăng Xuất");
-                    Console.WriteLine(row2);
-                    Console.Write("Chọn :");
-                    var staff = Console.ReadLine();
-                    if (staff == " ")
-                    {
-                        Console.ReadLine();
-                    }
-                    switch (staff)
-                    {
-                        case "1":
-                            ViewInvited(un, pw);
-                            break;
-                        case "2":
-                            Console.Clear();
-                            MenuChoice();
-                            break;
-                    }
-                }
-                while (true);
-
+                MenuUser(ubl.Login(un, pw), un, pw);
             }
         }
         public bool validate(string str, int status)
@@ -424,6 +378,59 @@ namespace EP_Console
             } while (true);
         }
 
+        public void MenuUser(User us, string un, string pw)
+        {
+            string row1 = "========================================";
+            string row2 = "----------------------------------------";
+            Console.Clear();
+            Menus x = new Menus();
+            EventDetailsBL edbl = new EventDetailsBL();
+            Invited cc = new Invited();
+            EventBL ebl = new EventBL();
+            var lists = ebl.GetAllEvent();
+            var list = edbl.GetAllEvent();
+            int i = 0;
+            foreach (var get in list)
+            {
+                if (get.EventDetails_UserID == 2)
+                {
+                    i++;
+                }
+            }
+
+            // Console.Write("=================>> Bạn có {0} lời mời tham gia sự kiện <<", Convert.ToString(i));
+            // string[] staffmenu = { "Lời Mời Sự Kiện", "Đăng xuất" };
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine(row1);
+                Console.WriteLine("Chào Bạn");
+                Console.WriteLine(row2);
+                Console.WriteLine("1. Lời Mời Sự Kiện({0})", i);
+                Console.WriteLine("2. Đăng Xuất");
+                Console.WriteLine(row2);
+                Console.Write("Chọn :");
+                var staff = Console.ReadLine();
+                if (staff == " ")
+                {
+                    Console.ReadLine();
+                }
+                switch (staff)
+                {
+                    case "1":
+                        x.ViewInvited(us, un, pw);
+                        break;
+                    case "2":
+                        Console.Clear();
+                        MenuChoice();
+                        break;
+                }
+            }
+            while (true);
+
+        }
+
         public void ViewEvent()
         {
             Menus x = new Menus();
@@ -467,7 +474,7 @@ namespace EP_Console
             Console.ReadLine();
         }
 
-        public void ViewInvited(string un, string pw)
+        public void ViewInvited(User us, string un, string pw)
         {
             Console.Clear();
             Menus x = new Menus();
@@ -498,7 +505,8 @@ namespace EP_Console
             switch (ss)
             {
                 case 0:
-                    break; ;
+                    x.MenuUser(us, un, pw);
+                    break;
 
                 default:
                     // Console.WriteLine("Bạn Đã Nhập sai! Vui lòng nhập lại!");
