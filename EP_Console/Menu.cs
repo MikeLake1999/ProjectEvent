@@ -237,7 +237,7 @@ namespace EP_Console
 
                             if (c.Time == null)
                             {
-                                Console.Write("- Thời gian sự kiện diễn ra : ");
+                                Console.Write("- Thời gian sự kiện diễn ra (Ngày/Tháng/Năm - Thời Gian) : ");
                                 string p = Console.ReadLine();
                                 if (p == "") continue;
 
@@ -312,7 +312,7 @@ namespace EP_Console
         public void MenuUser(User us, string un, string pw)
         {
             string row1 = "========================================";
-            string row2 = "----------------------------------------";
+            // string row2 = "----------------------------------------";
             Console.Clear();
             Menus x = new Menus();
             EventDetailsBL edbl = new EventDetailsBL();
@@ -328,7 +328,7 @@ namespace EP_Console
                     i++;
                 }
             }
-
+            
             // Console.Write("=================>> Bạn có {0} lời mời tham gia sự kiện <<", Convert.ToString(i));
             // string[] staffmenu = { "Lời Mời Sự Kiện", "Đăng xuất" };
 
@@ -337,11 +337,12 @@ namespace EP_Console
                 Console.Clear();
                 Console.WriteLine(row1);
                 Console.WriteLine("Chào Bạn");
-                Console.WriteLine(row2);
-                Console.WriteLine("1. Lời Mời Sự Kiện({0})", i);
-                Console.WriteLine("2. Đăng Xuất");
-                Console.WriteLine(row2);
-                Console.Write("Chọn :");
+                MenuDetails();
+                // Console.WriteLine(row2);
+                // Console.WriteLine("1. Lời Mời Sự Kiện({0})", i);
+                // Console.WriteLine("2. Đăng Xuất");
+                // Console.WriteLine(row2);
+                // Console.Write("Chọn :");
                 var staff = Console.ReadLine();
                 if (staff == " ")
                 {
@@ -362,6 +363,34 @@ namespace EP_Console
 
         }
 
+        public void MenuDetails()
+        {
+            // string row1 = "========================================";
+            string row2 = "----------------------------------------";
+            Console.Clear();
+            Menus x = new Menus();
+            EventDetailsBL edbl = new EventDetailsBL();
+            Invited cc = new Invited();
+            EventBL ebl = new EventBL();
+            var lists = ebl.GetAllEvent();
+            var list = edbl.GetAllEvent();
+            int i = 0;
+            foreach (var get in list)
+            {
+                if (get.EventDetails_UserID == 2)
+                {
+                    i++;
+                }
+            }
+            Console.WriteLine("Chào Bạn");
+            Console.WriteLine(row2);
+            Console.WriteLine("1. Lời Mời Sự Kiện({0})", i);
+            Console.WriteLine("2. Đăng Xuất");
+            Console.WriteLine(row2);
+            Console.Write("Chọn :");
+
+        }
+
         public void Inviting()
         {
             Menus x = new Menus();
@@ -378,11 +407,11 @@ namespace EP_Console
             {
                 string lins = ("\n|=====================================================================================================================================================================|\n");
                 Console.WriteLine("\t\tDanh sách sự kiện");
-                Console.Write("|  {0,-5}  | {1,-35}  | {2,-39}  | {3,-47}  | {4,-15} |", "Mã Sự Kiện", "Tên Sự Kiện", "Địa chỉ Sự Kiện", "Mô Tả", "Ngày Giờ");
+                Console.Write("|  {0,-5}  | {1,-35}  | {2,-39}  | {3,-15}|", "Mã Sự Kiện", "Tên Sự Kiện", "Địa chỉ Sự Kiện", "Ngày Giờ");
                 Console.Write(lins);
                 foreach (var Event in list)
                 {
-                    Console.WriteLine("|  {0,-5}       | {1,-35}  | {2,-39}  | {3,-47}  | {4,-15} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
+                    Console.WriteLine("|  {0,-5}       | {1,-35}  | {2,-39}  | {3,-15}|", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Time);
                 }
                 if (cc.EventDetails_EventID == null)
                 {
@@ -455,11 +484,11 @@ namespace EP_Console
             Console.Clear();
             string lin = ("\n|=====================================================================================================================================================================|\n");
             Console.WriteLine("\t\tDanh sách sự kiện");
-            Console.Write("|  {0,-5}  | {1,-35}  | {2,-39}  | {3,-15}|", "Mã Sự Kiện", "Tên Sự Kiện", "Địa chỉ Sự Kiện", "Ngày Giờ");
+            Console.Write("|  {0,-5}  | {1,-35}  | {2,-39}  | {3,-47}  | {4,-15} |", "Mã Sự Kiện", "Tên Sự Kiện", "Địa chỉ Sự Kiện", "Mô Tả", "Ngày Giờ");
             Console.Write(lin);
             foreach (var Event in list)
             {
-                Console.WriteLine("|  {0,-5}       | {1,-35}  | {2,-39}  | {3,-15}|", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Time);
+                Console.WriteLine("|  {0,-5}       | {1,-35}  | {2,-39}  | {3,-47}  | {4,-15} |", Event.ID_Event, Event.Name_Event, Event.Address_Event, Event.Description, Event.Time);
             }
 
             Console.Write("- Nhập Mã Sự Kiện để xem khách mời tham dự hoặc bấm 0 để thoát: ");
