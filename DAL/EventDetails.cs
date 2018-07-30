@@ -184,7 +184,7 @@ namespace DAL
             {
                 connection.Open();
             }
-            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Se Tham Gia' where user_id = @EventDetails_ID and event_id = @EventDetailss_ID;", connection);
+            MySqlCommand cmd = new MySqlCommand("update EventDetailsDB set event_status = 'Co The Tham Gia' where user_id = @EventDetails_ID and event_id = @EventDetailss_ID;", connection);
             try
             {
                 cmd.Parameters.Clear();
