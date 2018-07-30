@@ -4,6 +4,13 @@ create database if not exists EventDB char set 'utf8';
 
 use EventDB;
 
+create table if not exists EventDB(
+	event_id int auto_increment primary key,
+    event_name varchar(100) not null,
+    address varchar(100),
+    description varchar(500),
+    event_time varchar(50)
+);
 
 create table if not exists UserDB(
 	user_id int auto_increment primary key,
@@ -18,13 +25,7 @@ create table if not exists UserDB(
     phone_number varchar(30)	
 );
 
-create table if not exists EventDB(
-	event_id int auto_increment primary key,
-    event_name varchar(100) not null,
-    address varchar(100),
-    description varchar(500),
-    event_time varchar(50)
-);
+
 
 
 

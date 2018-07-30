@@ -18,7 +18,7 @@ namespace DAL
             List<Invited> ev = new List<Invited>();
             Invited c = new Invited();
 
-            string query = "select * from EventDetailsDB, UserDB, EventDB Where EventDetailsDB.user_id = UserDB.user_id and EventDetailsDB.event_id = EventDB.event_id;";
+            string query = "select * from EventDetailsDB, EventDB, UserDB Where EventDetailsDB.user_id = UserDB.user_id and EventDetailsDB.event_id = EventDB.event_id;";
             if (connection.State == System.Data.ConnectionState.Closed)
             {
                 connection.Open();
